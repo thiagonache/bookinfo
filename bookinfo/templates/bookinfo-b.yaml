@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     namespace: bookinfo
-    server: { { .Values.spec.destination.server } }
+    server: "{{ .Values.spec.destination.server }}"
   project: default
   source:
     path: bookinfo

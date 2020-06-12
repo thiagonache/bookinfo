@@ -180,7 +180,7 @@ spec:
       serviceAccountName: bookinfo-reviews-{{ .Values.reviews.version }}
       containers:
       - name: reviews
-        image: docker.io/istio/examples-bookinfo-reviews-v1:1.16.1
+        image: docker.io/istio/examples-bookinfo-reviews-{{ .Values.reviews.version }}
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR

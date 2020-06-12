@@ -9,7 +9,8 @@ spec:
   destination:
     namespace: bookinfo
     server: {{ .Values.spec.destination.server }}
-  project: bookinfo
+  project: default
   source:
-    chart: https://github.com/thiagonache/bookinfo
+    path: bookinfo
+    repoURL: https://github.com/thiagonache/bookinfo
     targetRevision: HEAD

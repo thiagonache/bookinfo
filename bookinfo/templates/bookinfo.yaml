@@ -138,49 +138,49 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: reviews-{{ .Values.reviews.version }}
+  name: reviews-v2
   labels:
     app: reviews
     service: reviews
-    version: {{ .Values.reviews.version }}
+    version: v2
 spec:
   ports:
   - port: 9080
     name: http
   selector:
     app: reviews
-    version: {{ .Values.reviews.version }}
+    version: v2
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: bookinfo-reviews-{{ .Values.reviews.version }}
+  name: bookinfo-reviews-v2
   labels:
     account: reviews
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reviews-{{ .Values.reviews.version }}
+  name: reviews-v2
   labels:
     app: reviews
-    version: {{ .Values.reviews.version }}
+    version: v2
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: reviews
-      version: {{ .Values.reviews.version }}
+      version: v2
   template:
     metadata:
       labels:
         app: reviews
-        version: {{ .Values.reviews.version }}
+        version: v2
     spec:
-      serviceAccountName: bookinfo-reviews-{{ .Values.reviews.version }}
+      serviceAccountName: bookinfo-reviews-v2
       containers:
       - name: reviews
-        image: docker.io/istio/examples-bookinfo-reviews-{{ .Values.reviews.version }}
+        image: docker.io/istio/examples-bookinfo-reviews-v2
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR

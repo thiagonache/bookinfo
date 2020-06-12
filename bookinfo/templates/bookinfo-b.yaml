@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bookinfo-a
+  namespace: bookinfo
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: bookinfo
+    server: {{ .Values.spec.destination.server }}
+  project: bookinfo
+  source:
+    chart: https://github.com/thiagonache/bookinfo
+    targetRevision: HEAD

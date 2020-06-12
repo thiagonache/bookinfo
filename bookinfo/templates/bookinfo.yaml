@@ -32,49 +32,49 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: details-v1
+  name: details-{{ .Values.details.version }}
   labels:
     app: details
     service: details
-    version: v1
+    version: {{ .Values.details.version }}
 spec:
   ports:
   - port: 9080
     name: http
   selector:
     app: details
-    version: v1
+    version: {{ .Values.details.version }}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: bookinfo-details-v1
+  name: bookinfo-details-{{ .Values.details.version }}
   labels:
     account: details
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: details-v1
+  name: details-{{ .Values.details.version }}
   labels:
     app: details
-    version: v1
+    version: {{ .Values.details.version }}
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: details
-      version: v1
+      version: {{ .Values.details.version }}
   template:
     metadata:
       labels:
         app: details
-        version: v1
+        version: {{ .Values.details.version }}
     spec:
       serviceAccountName: bookinfo-details-v1
       containers:
       - name: details
-        image: docker.io/istio/examples-bookinfo-details-v1
+        image: docker.io/istio/examples-bookinfo-details-{{ .Values.details.version }}
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -85,49 +85,49 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ratings-v1
+  name: ratings-{{ .Values.ratings.version }}
   labels:
     app: ratings
     service: ratings
-    version: v1
+    version: {{ .Values.ratings.version }}
 spec:
   ports:
   - port: 9080
     name: http
   selector:
     app: ratings
-    version: v1
+    version: {{ .Values.ratings.version }}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: bookinfo-ratings-v1
+  name: bookinfo-ratings-{{ .Values.ratings.version }}
   labels:
     account: ratings
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ratings-v1
+  name: ratings-{{ .Values.ratings.version }}
   labels:
     app: ratings
-    version: v1
+    version: {{ .Values.ratings.version }}
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: ratings
-      version: v1
+      version: {{ .Values.ratings.version }}
   template:
     metadata:
       labels:
         app: ratings
-        version: v1
+        version: {{ .Values.ratings.version }}
     spec:
-      serviceAccountName: bookinfo-ratings-v1
+      serviceAccountName: bookinfo-ratings-{{ .Values.ratings.version }}
       containers:
       - name: ratings
-        image: docker.io/istio/examples-bookinfo-ratings-v1
+        image: docker.io/istio/examples-bookinfo-ratings-{{ .Values.ratings.version }}
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -138,46 +138,46 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: reviews-v1
+  name: reviews-{{ .Values.reviews.version }}
   labels:
     app: reviews
     service: reviews
-    version: v1
+    version: {{ .Values.reviews.version }}
 spec:
   ports:
   - port: 9080
     name: http
   selector:
     app: reviews
-    version: v1
+    version: {{ .Values.reviews.version }}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: bookinfo-reviews-v1
+  name: bookinfo-reviews-{{ .Values.reviews.version }}
   labels:
     account: reviews
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reviews-v1
+  name: reviews-{{ .Values.reviews.version }}
   labels:
     app: reviews
-    version: v1
+    version: {{ .Values.reviews.version }}
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: reviews
-      version: v1
+      version: {{ .Values.reviews.version }}
   template:
     metadata:
       labels:
         app: reviews
-        version: v1
+        version: {{ .Values.reviews.version }}
     spec:
-      serviceAccountName: bookinfo-reviews-v1
+      serviceAccountName: bookinfo-reviews-{{ .Values.reviews.version }}
       containers:
       - name: reviews
         image: docker.io/istio/examples-bookinfo-reviews-v1:1.16.1
@@ -204,49 +204,49 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: productpage-v1
+  name: productpage-{{ .Values.productpage.version }}
   labels:
     app: productpage
     service: productpage
-    version: v1
+    version: {{ .Values.productpage.version }}
 spec:
   ports:
   - port: 9080
     name: http
   selector:
     app: productpage
-    version: v1
+    version: {{ .Values.productpage.version }}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: bookinfo-productpage-v1
+  name: bookinfo-productpage-{{ .Values.productpage.version }}
   labels:
     account: productpage
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: productpage-v1
+  name: productpage-{{ .Values.productpage.version }}
   labels:
     app: productpage
-    version: v1
+    version: {{ .Values.productpage.version }}
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: productpage
-      version: v1
+      version: {{ .Values.productpage.version }}
   template:
     metadata:
       labels:
         app: productpage
-        version: v1
+        version: {{ .Values.productpage.version }}
     spec:
-      serviceAccountName: bookinfo-productpage-v1
+      serviceAccountName: bookinfo-productpage-{{ .Values.productpage.version }}
       containers:
       - name: productpage
-        image: docker.io/istio/examples-bookinfo-productpage-v1
+        image: docker.io/istio/examples-bookinfo-productpage-{{ .Values.productpage.version }}
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080

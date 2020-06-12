@@ -1,3 +1,4 @@
+
 apiVersion: v1
-name: helm-bookinfo
+name: bookinfo
 version: 1

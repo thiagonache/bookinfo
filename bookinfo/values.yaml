@@ -1,4 +1,8 @@
-
-spec:
-  destination:
-    server: https://kubernetes.default.svc
+details:
+  version: v1
+ratings:
+  version: v1
+productpage:
+  version: v1
+reviews:
+  version: v1

@@ -11,6 +11,5 @@ spec:
     server: {{ .Values.spec.destination.server }}
   project: bookinfo
   source:
-    path: bookinfo
-    repoURL: https://github.com/thiagonache/bookinfo
+    chartURL: https://github.com/thiagonache/bookinfo
     targetRevision: HEAD

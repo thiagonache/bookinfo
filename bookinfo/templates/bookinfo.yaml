@@ -1,0 +1,259 @@
+# Copyright Istio Authors
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+##################################################################################################
+# This file defines the services, service accounts, and deployments for the Bookinfo sample.
+#
+# To apply all 4 Bookinfo services, their corresponding service accounts, and deployments:
+#
+#   kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
+#
+# Alternatively, you can deploy any resource separately:
+#
+#   kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -l service=reviews # reviews Service
+#   kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -l account=reviews # reviews ServiceAccount
+#   kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -l app=reviews,version=v3 # reviews-v3 Deployment
+##################################################################################################
+
+##################################################################################################
+# Details service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: details-{{ template "bookinfo.details.version" . }}
+  labels:
+    app: details
+    service: details
+    version: {{ template "bookinfo.details.version" . }}
+spec:
+  ports:
+  - port: 9080
+    name: http
+  selector:
+    app: details
+    version: {{ template "bookinfo.details.version" . }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-details-{{ template "bookinfo.details.version" . }}
+  labels:
+    account: details
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: details-{{ template "bookinfo.details.version" . }}
+  labels:
+    app: details
+    version: {{ template "bookinfo.details.version" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: details
+      version: {{ template "bookinfo.details.version" . }}
+  template:
+    metadata:
+      labels:
+        app: details
+        version: {{ template "bookinfo.details.version" . }}
+    spec:
+      serviceAccountName: bookinfo-details
+      containers:
+      - name: details
+        image: docker.io/istio/examples-bookinfo-details-{{ template "bookinfo.details.version" . }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+---
+##################################################################################################
+# Ratings service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: ratings-{{ template "bookinfo.ratings.version" . }}
+  labels:
+    app: ratings
+    service: ratings
+    version: {{ template "bookinfo.ratings.version" . }}
+spec:
+  ports:
+  - port: 9080
+    name: http
+  selector:
+    app: ratings
+    version: {{ template "bookinfo.ratings.version" . }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-ratings-{{ template "bookinfo.ratings.version" . }}
+  labels:
+    account: ratings
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ratings-{{ template "bookinfo.ratings.version" . }}
+  labels:
+    app: ratings
+    version: {{ template "bookinfo.ratings.version" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ratings
+      version: {{ template "bookinfo.ratings.version" . }}
+  template:
+    metadata:
+      labels:
+        app: ratings
+        version: {{ template "bookinfo.ratings.version" . }}
+    spec:
+      serviceAccountName: bookinfo-ratings-{{ template "bookinfo.ratings.version" . }}
+      containers:
+      - name: ratings
+        image: docker.io/istio/examples-bookinfo-ratings-{{ template "bookinfo.ratings.version" . }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+---
+##################################################################################################
+# Reviews service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: reviews-{{ template "bookinfo.reviews.version" . }}
+  labels:
+    app: reviews
+    service: reviews
+    version: {{ template "bookinfo.reviews.version" . }}
+spec:
+  ports:
+  - port: 9080
+    name: http
+  selector:
+    app: reviews
+    version: {{ template "bookinfo.reviews.version" . }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-reviews-{{ template "bookinfo.reviews.version" . }}
+  labels:
+    account: reviews
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-{{ template "bookinfo.reviews.version" . }}
+  labels:
+    app: reviews
+    version: {{ template "bookinfo.reviews.version" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reviews
+      version: {{ template "bookinfo.reviews.version" . }}
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: {{ template "bookinfo.reviews.version" . }}
+    spec:
+      serviceAccountName: bookinfo-reviews-{{ template "bookinfo.reviews.version" . }}
+      containers:
+      - name: reviews
+        image: docker.io/istio/examples-bookinfo-reviews-v1:1.16.1
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: LOG_DIR
+          value: "/tmp/logs"
+        ports:
+        - containerPort: 9080
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: wlp-output
+          mountPath: /opt/ibm/wlp/output
+      volumes:
+      - name: wlp-output
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
+
+##################################################################################################
+# Productpage services
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: productpage-{{ template "bookinfo.productpage.version" . }}
+  labels:
+    app: productpage
+    service: productpage
+    version: {{ template "bookinfo.productpage.version" . }}
+spec:
+  ports:
+  - port: 9080
+    name: http
+  selector:
+    app: productpage
+    version: {{ template "bookinfo.productpage.version" . }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-productpage-{{ template "bookinfo.productpage.version" . }}
+  labels:
+    account: productpage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productpage-{{ template "bookinfo.productpage.version" . }}
+  labels:
+    app: productpage
+    version: {{ template "bookinfo.productpage.version" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productpage
+      version: {{ template "bookinfo.productpage.version" . }}
+  template:
+    metadata:
+      labels:
+        app: productpage
+        version: {{ template "bookinfo.productpage.version" . }}
+    spec:
+      serviceAccountName: bookinfo-productpage-{{ template "bookinfo.productpage.version" . }}
+      containers:
+      - name: productpage
+        image: docker.io/istio/examples-bookinfo-productpage-{{ template "bookinfo.productpage.version" . }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: tmp
+        emptyDir: {}
+---
